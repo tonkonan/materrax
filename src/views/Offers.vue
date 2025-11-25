@@ -180,30 +180,65 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  font-weight: 200;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
 }
 
 .btn {
-  padding: 0.75rem 1.5rem;
+  padding: 0.875rem 2rem;
   border: none;
-  border-radius: 4px;
-  font-weight: 600;
+  border-radius: 8px;
+  font-weight: 400;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn:hover::before {
+  left: 100%;
 }
 
 .btn-primary {
-  background: #667eea;
-  color: white;
+  background: var(--accent-gold);
+  color: var(--marble-dark);
 }
 
 .btn-primary:hover {
-  background: #5568d3;
+  background: var(--accent-gold-hover);
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
+  transform: translateY(-2px);
 }
 
 .btn-secondary {
-  background: #ddd;
-  color: #333;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--accent-gold);
+  color: var(--text-primary);
 }
 
 .modal-overlay {
@@ -212,7 +247,9 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -220,153 +257,281 @@ export default {
 }
 
 .modal-content {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  max-width: 500px;
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 3rem 2.5rem;
+  border-radius: 16px;
+  max-width: 600px;
   width: 90%;
   max-height: 90vh;
   overflow-y: auto;
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-elegant);
+  position: relative;
+}
+
+.modal-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+}
+
+.modal-content h2 {
+  margin-bottom: 2rem;
+  font-size: 1.75rem;
+  font-weight: 200;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
 }
 
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 1.75rem;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
+  margin-bottom: 0.75rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
 }
 
 .form-group input,
 .form-group textarea {
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--accent-gold);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 0.6;
 }
 
 .form-actions {
   display: flex;
   gap: 1rem;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
 }
 
 .loading {
   text-align: center;
-  padding: 2rem;
-  color: #666;
+  padding: 3rem;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  font-weight: 300;
 }
 
 .offers-list {
   display: grid;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 .offer-card {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 2.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-soft);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.offer-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.offer-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-elegant);
+  border-color: rgba(212, 175, 55, 0.3);
+}
+
+.offer-card:hover::before {
+  transform: scaleX(1);
 }
 
 .offer-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .offer-header h3 {
   margin: 0;
-  color: #2c3e50;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: -0.01em;
 }
 
 .price {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #27ae60;
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--accent-gold);
+  letter-spacing: -0.02em;
 }
 
 .offer-info p {
-  margin: 0.5rem 0;
+  margin: 0.75rem 0;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+.offer-info strong {
+  color: var(--text-primary);
+  font-weight: 400;
+  letter-spacing: 0.02em;
 }
 
 .offer-meta {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid #eee;
-  color: #999;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-muted);
   display: flex;
   justify-content: space-between;
+  font-size: 0.9rem;
+  letter-spacing: 0.01em;
+}
+
+.offer-meta strong {
+  color: var(--text-secondary);
+  font-weight: 400;
 }
 
 .no-data {
   text-align: center;
-  padding: 2rem;
-  color: #666;
-  background: #f8f9fa;
-  border-radius: 8px;
-  margin-bottom: 1rem;
+  padding: 3rem;
+  color: var(--text-secondary);
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  border: 1px solid var(--card-border);
+  font-weight: 300;
 }
 
 .supplier-info {
-  margin-top: 1.5rem;
-  padding: 1rem;
-  background: #f8f9fa;
-  border-radius: 6px;
-  border-left: 4px solid #667eea;
+  margin-top: 2rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  border-left: 3px solid var(--accent-gold);
+  border: 1px solid var(--border-color);
+  border-left: 3px solid var(--accent-gold);
 }
 
 .supplier-info h4 {
-  margin: 0 0 1rem 0;
-  color: #2c3e50;
-  font-size: 1.1rem;
+  margin: 0 0 1.5rem 0;
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  font-weight: 300;
+  letter-spacing: -0.01em;
 }
 
 .supplier-details p {
-  margin: 0.5rem 0;
+  margin: 0.75rem 0;
   font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.supplier-details strong {
+  color: var(--text-primary);
+  font-weight: 400;
 }
 
 .reliability-stats {
-  margin-top: 1rem;
-  padding: 1rem;
-  background: white;
-  border-radius: 6px;
-  border: 1px solid #e0e0e0;
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
 }
 
 .reliability-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.reliability-header strong {
+  color: var(--text-primary);
+  font-weight: 400;
+  font-size: 1rem;
 }
 
 .reliability-badge {
-  font-size: 1.2rem;
-  font-weight: 700;
-  padding: 0.25rem 0.75rem;
-  background: #f8f9fa;
-  border-radius: 4px;
+  font-size: 1.25rem;
+  font-weight: 300;
+  padding: 0.5rem 1rem;
+  background: rgba(212, 175, 55, 0.1);
+  border-radius: 6px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
 }
 
 .reliability-details p {
-  margin: 0.5rem 0;
+  margin: 0.75rem 0;
   font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.reliability-details strong {
+  color: var(--text-primary);
+  font-weight: 400;
 }
 
 .verified-badge {
-  color: #27ae60;
-  font-weight: 600;
-  margin-top: 0.5rem;
+  color: #4ade80;
+  font-weight: 400;
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
 }
 
 .status-active {
-  color: #27ae60;
-  font-weight: 600;
+  color: #4ade80;
+  font-weight: 400;
+  letter-spacing: 0.02em;
 }
 </style>
 
