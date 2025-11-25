@@ -20,12 +20,46 @@
           <span>{{ formatDate(user?.created_at) }}</span>
         </div>
       </div>
+
+      <div class="columns-draft">
+        <h2>Черновик полей профиля</h2>
+        <div class="columns-grid">
+          <div class="col-card">
+            <div class="col-header">
+              <h3>Для покупателя</h3>
+              <button class="btn-copy" @click="copyText(buyerColumns)">Копировать</button>
+            </div>
+            <textarea
+              v-model="buyerColumns"
+              rows="8"
+              placeholder="Каждая строка — название поля (напр. ИНН, Юр. адрес, Контактное лицо)"
+            ></textarea>
+            <ul class="preview-list">
+              <li v-for="(item, idx) in buyerColumnsList" :key="'b-'+idx">{{ item }}</li>
+            </ul>
+          </div>
+          <div class="col-card">
+            <div class="col-header">
+              <h3>Для поставщика</h3>
+              <button class="btn-copy" @click="copyText(supplierColumns)">Копировать</button>
+            </div>
+            <textarea
+              v-model="supplierColumns"
+              rows="8"
+              placeholder="Каждая строка — название поля (напр. ИНН, ОГРН, Адрес склада, Кол-во машин)"
+            ></textarea>
+            <ul class="preview-list">
+              <li v-for="(item, idx) in supplierColumnsList" :key="'s-'+idx">{{ item }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
@@ -45,10 +79,53 @@ export default {
       return new Date(dateString).toLocaleDateString('ru-RU')
     }
 
+    // Черновики полей (локально, без сохранения)
+    const buyerColumns = ref([
+      'ИНН',
+      'Юридический адрес',
+      'Контактное лицо',
+      'Телефон',
+      'Email',
+      'Город доставки по умолчанию'
+    ].join('\n'))
+
+    const supplierColumns = ref([
+      'ИНН',
+      'ОГРН',
+      'Юридическое лицо',
+      'Адрес склада/базы',
+      'Регион работы',
+      'Парковка (кол-во машин)',
+      'Типы кузовов',
+      'Страхование груза'
+    ].join('\n'))
+
+    const toList = (text) =>
+      text
+        .split('\n')
+        .map(s => s.trim())
+        .filter(Boolean)
+
+    const buyerColumnsList = computed(() => toList(buyerColumns.value))
+    const supplierColumnsList = computed(() => toList(supplierColumns.value))
+
+    const copyText = async (text) => {
+      try {
+        await navigator.clipboard?.writeText(text)
+      } catch (e) {
+        // no-op
+      }
+    }
+
     return {
       user,
       roleLabel,
-      formatDate
+      formatDate,
+      buyerColumns,
+      supplierColumns,
+      buyerColumnsList,
+      supplierColumnsList,
+      copyText
     }
   }
 }
@@ -105,6 +182,76 @@ h1 {
   color: white;
   border-radius: 4px;
   font-weight: 600;
+}
+
+.columns-draft {
+  margin-top: 2rem;
+}
+
+.columns-draft h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+  color: #2c3e50;
+}
+
+.columns-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.col-card {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 1rem;
+  background: #fafafa;
+}
+
+.col-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.col-card h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #2c3e50;
+}
+
+textarea {
+  width: 100%;
+  resize: vertical;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-family: inherit;
+  background: white;
+  min-height: 120px;
+}
+
+.btn-copy {
+  border: none;
+  background: #667eea;
+  color: white;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-copy:hover {
+  background: #5568d3;
+}
+
+.preview-list {
+  margin: 0.75rem 0 0;
+  padding-left: 1rem;
+  color: #555;
+}
+
+.preview-list li {
+  margin: 0.25rem 0;
 }
 </style>
 
